@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<property name="LOG_PATH" value="C:/Logs" />
+
+	<!-- send logs to a file mdsApp.log -->
+	<appender name="SAVE-TO-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    	<file>${LOG_PATH}/mdsApp.log</file>
+    	<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+        	<Pattern>
+            	%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n
+        	</Pattern>
+    	</encoder>
+    	
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/archived/mdsApp.%d{yyyy-MM-dd}.log</fileNamePattern>	
+			<maxHistory>10</maxHistory>
+        	<totalSizeCap>1KB</totalSizeCap>
+		</rollingPolicy>
+	</appender>
+	
+	<!-- send error logs to  a file mdsAppError.log -->
+	<appender name="ERROR-FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    	<file>${LOG_PATH}/mdsAppError.log</file>
+    	<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+        	<Pattern>
+            	%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n
+        	</Pattern>
+    	</encoder>
+    	
+    	<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+    		<fileNamePattern>${LOG_PATH}/archived/mdsAppError.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+    		<maxHistory>10</maxHistory>
+        	<totalSizeCap>1MB</totalSizeCap>
+    	</rollingPolicy> 
+	</appender>  
+	
+	
+</configuration>
