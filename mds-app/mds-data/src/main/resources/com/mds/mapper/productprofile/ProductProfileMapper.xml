@@ -1,0 +1,53 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mds.mapper.productprofile.ProductProfileMapper">
+
+    <resultMap id="productProfileResultMap" type="ProductProfile">
+        <id column="product_number" property="productNo"/>
+        <result column="product_name" property="productName"/>
+        <result column="product_type" property="productType"/>       
+        <result column="amount" property="amount"/> 
+        <result column="currency" property="currency"/>
+        <result column="country" property="country"/>
+        <result column="term" property="term"/>
+        <result column="status" property="status"/> 
+        <result column="approval_date" property="approvalDate"/>
+        <result column="created_date" property="createdDate"/>
+        <result column="last_modified_date" property="lastModifiedDate" />
+    </resultMap>
+    
+    <!-- Note: if you are passing null value then you need to specify jdbcType otherwise it will not work -->
+    <insert id="addProfile" statementType="CALLABLE" >
+  		{
+  			CALL PP_ADD (
+				#{ productNo },
+				#{ productName },
+				#{ productType },
+				#{ amount },
+				#{ currency },
+				#{ country },
+				#{ approvalDate mode=IN, jdbcType=TIMESTAMP },
+				#{ term },
+				#{ status },
+				#{ createdDate},
+				#{ lastModifiedDate},
+				#{ message, mode=OUT, jdbcType=VARCHAR, javaType=String }
+		)}
+	</insert>
+	
+    <select id="getAllProfiles"  statementType="CALLABLE" >
+        { 
+        	CALL PP_RETRIEVE_ALL (
+        		#{ productProfileList, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=productProfileResultMap }
+        )}
+    </select> 
+   
+    <select id="getProfileById"  statementType="CALLABLE">
+        {
+			CALL PP_RETRIEVE (
+				#{ productNo,  		mode=IN,  jdbcType=INTEGER },
+				#{ productProfile, 	mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=productProfileResultMap }
+        )}
+    </select> 
+    
+</mapper>

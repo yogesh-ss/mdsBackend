@@ -29,6 +29,24 @@
         <scope>provided</scope>
     </dependency>
     
+	<dependency>
+    	<groupId>org.apache.tomcat</groupId>
+    	<artifactId>tomcat-dbcp</artifactId>
+    	<version>8.5.4</version>
+	</dependency>
+	
+	<!-- Exclude the default Tomcat connection pool -->
+    <dependency>
+    	<groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.tomcat</groupId>
+                    <artifactId>tomcat-jdbc</artifactId>
+                </exclusion>
+            </exclusions>
+	</dependency>
+	
   </dependencies>
   
   <build>
